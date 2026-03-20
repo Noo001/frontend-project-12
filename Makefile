@@ -1,5 +1,5 @@
 install:
-	npm ci
+	npm ci --omit=dev
 	cd frontend && npm ci
 
 build:
