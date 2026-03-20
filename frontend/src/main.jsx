@@ -1,11 +1,10 @@
-// frontend/src/main.jsx
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { I18nextProvider } from 'react-i18next'
 import { ToastContainer } from 'react-toastify'
-import { RollbarProvider } from '@rollbar/react'
+import { Provider as RollbarProvider } from '@rollbar/react'
 import store from './store'
 import i18n from './i18n'
 import rollbar from './rollbar'
