@@ -12,7 +12,7 @@ A real-time chat application inspired by Slack, built with React and Vite.
 
 ## Demo
 
-Live demo: [https://your-app-name.onrender.com](https://your-app-name.onrender.com)
+Live demo: [https://slack-chat-54lu.onrender.com](https://your-app-name.onrender.com)
 
 ## Technologies
 
