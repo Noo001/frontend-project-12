@@ -38,25 +38,20 @@ function AddChannelModal({ isOpen, onClose }) {
           return {}
         }}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
-          console.log('Submitting channel creation for:', values.name)
           try {
             const cleanName = cleanText(values.name)
-            console.log('Clean name:', cleanName)
             const response = await axios.post(
               '/api/v1/channels',
               { name: cleanName },
               { headers: { Authorization: `Bearer ${token}` } }
             )
-            console.log('Channel created, response:', response.data)
             const newChannel = response.data
             dispatch(addChannel(newChannel))
             dispatch(setCurrentChannelId(newChannel.id))
             toast.success(t('channels.created', { name: cleanName }))
-            console.log('Toast shown, resetting form and closing modal')
             resetForm()
             onClose()
           } catch (err) {
-            console.error('Error creating channel:', err)
             if (err.code === 'ERR_NETWORK') {
               toast.error(t('errors.network'))
               if (rollbar) rollbar.error('Network error creating channel', err)
@@ -71,13 +66,17 @@ function AddChannelModal({ isOpen, onClose }) {
       >
         {({ errors, touched, isSubmitting }) => (
           <Form>
-            <Field
-              type="text"
-              name="name"
-              placeholder={t('channels.channelName')}
-              autoFocus
-            />
-            {errors.name && touched.name && <div className="error">{errors.name}</div>}
+            <div>
+              <label htmlFor="channelName">{t('channels.channelName')}</label>
+              <Field
+                type="text"
+                id="channelName"
+                name="name"
+                placeholder={t('channels.channelName')}
+                autoFocus
+              />
+              {errors.name && touched.name && <div className="error">{errors.name}</div>}
+            </div>
             <button type="submit" disabled={isSubmitting}>
               {t('channels.create')}
             </button>
