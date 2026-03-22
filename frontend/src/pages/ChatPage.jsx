@@ -10,7 +10,7 @@ import { setChannels, setCurrentChannelId } from '../store/slices/channelsSlice'
 import { setMessages, addMessage } from '../store/slices/messagesSlice'
 import { clearToken } from '../store/slices/authSlice'
 import { cleanText } from '../utils/filter'
-import ChannelMenuWithRollbar from '../components/ChannelMenuWithRollbar'
+import ChannelMenu from '../components/ChannelMenu'
 import AddChannelModal from '../components/AddChannelModal'
 
 function ChatPage() {
@@ -19,6 +19,7 @@ function ChatPage() {
   const { t } = useTranslation()
   const rollbar = useRollbar()
   const token = useSelector((state) => state.auth.token)
+  const username = useSelector((state) => state.auth.username)
   const channels = useSelector((state) => state.channels.items)
   const currentChannelId = useSelector((state) => state.channels.currentChannelId)
   const messages = useSelector((state) => state.messages.items)
@@ -67,6 +68,8 @@ function ChatPage() {
 
   useEffect(() => {
     socket.on('newMessage', (message) => {
+      console.log('New message received:', message)
+      console.log('Username:', message.username)
       dispatch(addMessage(message))
     })
 
@@ -86,6 +89,7 @@ function ChatPage() {
         {
           body: cleanMessage,
           channelId: currentChannelId,
+          username: username,
         },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -137,7 +141,7 @@ function ChatPage() {
               >
                 {channel.name}
               </button>
-              <ChannelMenuWithRollbar channel={channel} />
+              <ChannelMenu channel={channel} rollbar={rollbar} />
             </li>
           ))}
         </ul>
@@ -161,8 +165,8 @@ function ChatPage() {
             onChange={(e) => setNewMessage(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
             placeholder={t('chat.messagePlaceholder')}
-            disabled={isSending}
             aria-label={t('chat.messagePlaceholder')}
+            disabled={isSending}
           />
           <button onClick={handleSendMessage} disabled={isSending}>
             {t('chat.send')}
