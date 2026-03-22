@@ -37,9 +37,10 @@ function SignupPage() {
           setError('')
           try {
             const response = await axios.post('/api/v1/signup', values)
-            const { token } = response.data
+            const { token, username } = response.data
             console.error('Registration token:', token)
-            dispatch(setToken(token))
+            console.error('Registration username:', username)
+            dispatch(setToken({ token, username }))
             navigate('/')
           } catch (err) {
             console.error('Registration error:', err)

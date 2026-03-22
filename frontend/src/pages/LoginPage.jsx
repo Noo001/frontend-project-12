@@ -21,8 +21,8 @@ function LoginPage() {
           setError('')
           try {
             const response = await axios.post('/api/v1/login', values)
-            const { token } = response.data
-            dispatch(setToken(token))
+            const { token, username } = response.data
+            dispatch(setToken({ token, username }))
             navigate('/')
           } catch (err) {
             setError(t('auth.invalidCredentials'))
