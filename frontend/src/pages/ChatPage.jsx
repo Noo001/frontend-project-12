@@ -109,6 +109,10 @@ function ChatPage() {
     return <div>Loading...</div>
   }
 
+  if (!channels || channels.length === 0) {
+    return <div>No channels</div>
+  }
+
   return (
     <div className="chat-container">
       <div className="sidebar">
@@ -123,7 +127,6 @@ function ChatPage() {
                 type="button"
                 onClick={() => handleChannelSwitch(channel.id)}
                 className="channel-button"
-                data-testid="channel-button"
               >
                 {channel.name}
               </button>
