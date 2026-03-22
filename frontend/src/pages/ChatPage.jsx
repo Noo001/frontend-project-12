@@ -3,15 +3,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import { useRollbar } from '@rollbar/react'
 import axios from 'axios'
 import socket from '../socket'
 import { setChannels, setCurrentChannelId } from '../store/slices/channelsSlice'
 import { setMessages, addMessage } from '../store/slices/messagesSlice'
 import { clearToken } from '../store/slices/authSlice'
 import { cleanText } from '../utils/filter'
-import ChannelMenu from '../components/ChannelMenu'
+import ChannelMenuWithRollbar from '../components/ChannelMenuWithRollbar'
 import AddChannelModal from '../components/AddChannelModal'
-import { useRollbar } from '@rollbar/react'
 
 function ChatPage() {
   const dispatch = useDispatch()
@@ -108,13 +108,15 @@ function ChatPage() {
         </div>
         <ul className="channels-list">
           {channels.map(channel => (
-            <li
-              key={channel.id}
-              className={channel.id === currentChannelId ? 'active' : ''}
-              onClick={() => handleChannelSwitch(channel.id)}
-            >
-              <span># {channel.name}</span>
-              <ChannelMenu channel={channel} />
+            <li key={channel.id} className={channel.id === currentChannelId ? 'active' : ''}>
+              <button
+                type="button"
+                onClick={() => handleChannelSwitch(channel.id)}
+                className="channel-button"
+              >
+                # {channel.name}
+              </button>
+              <ChannelMenuWithRollbar channel={channel} />
             </li>
           ))}
         </ul>
