@@ -25,7 +25,7 @@ function LoginPage() {
             dispatch(setToken({ token, username }))
             navigate('/')
           }
-          catch (err) {
+          catch {
             setError(t('auth.invalidCredentials'))
           }
           finally {

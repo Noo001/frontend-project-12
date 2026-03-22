@@ -27,12 +27,12 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     {rollbar
       ? (
-        <RollbarProvider instance={rollbar}>
-          {appContent}
-        </RollbarProvider>
-      )
-      : (
-        appContent
-      )}
+          <RollbarProvider instance={rollbar}>
+            {appContent}
+          </RollbarProvider>
+        )
+        : (
+          appContent
+        )}
   </React.StrictMode>,
 )
