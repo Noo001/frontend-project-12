@@ -65,8 +65,10 @@ function AddChannelModal({ isOpen, onClose }) {
       >
         {({ errors, touched, isSubmitting }) => (
           <Form>
+            <label htmlFor="channel-name">{t('channels.channelName')}</label>
             <Field
               type="text"
+              id="channel-name"
               name="name"
               placeholder={t('channels.channelName')}
               autoFocus
