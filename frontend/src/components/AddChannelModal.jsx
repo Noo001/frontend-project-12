@@ -38,13 +38,11 @@ function AddChannelModal({ isOpen, onClose }) {
         onSubmit={async (values, { setSubmitting, resetForm }) => {
           try {
             const cleanName = cleanText(values.name)
-            console.log('Creating channel:', cleanName)
             const response = await axios.post(
               '/api/v1/channels',
               { name: cleanName },
               { headers: { Authorization: `Bearer ${token}` } }
             )
-            console.log('Response:', response.data)
             const newChannel = response.data
             dispatch(addChannel(newChannel))
             dispatch(setCurrentChannelId(newChannel.id))
@@ -52,7 +50,6 @@ function AddChannelModal({ isOpen, onClose }) {
             resetForm()
             onClose()
           } catch (err) {
-            console.error('Create channel error:', err)
             if (err.code === 'ERR_NETWORK') {
               toast.error(t('errors.network'))
             } else {
