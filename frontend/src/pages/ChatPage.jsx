@@ -27,28 +27,25 @@ function ChatPage() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
 
-  console.error('=== CHAT PAGE MOUNTED ===')
-  console.error('Token in ChatPage:', token)
-
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true)
       try {
-        console.error('Fetching data with token:', token)
-        const response = await axios.get('/api/v1/data', {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        console.error('Response status:', response.status)
-        console.error('Response data:', response.data)
-        const { channels, messages, currentChannelId } = response.data
-        console.error('Fetched channels:', channels)
-        console.error('Fetched messages:', messages)
+        const [channelsRes, messagesRes] = await Promise.all([
+          axios.get('/api/v1/channels', {
+            headers: { Authorization: `Bearer ${token}` },
+          }),
+          axios.get('/api/v1/messages', {
+            headers: { Authorization: `Bearer ${token}` },
+          }),
+        ])
+        const channels = channelsRes.data
+        const messages = messagesRes.data
+        const currentChannelId = channels.find(ch => ch.name === 'general')?.id || channels[0]?.id
         dispatch(setChannels(channels))
         dispatch(setMessages(messages))
         dispatch(setCurrentChannelId(currentChannelId))
       } catch (err) {
-        console.error('Fetch error:', err)
-        console.error('Error response:', err.response)
         if (err.response?.status === 401) {
           dispatch(clearToken())
           navigate('/login')
@@ -65,9 +62,6 @@ function ChatPage() {
     }
     if (token) {
       fetchData()
-    } else {
-      console.error('No token, skipping fetch')
-      setIsLoading(false)
     }
   }, [token, dispatch, navigate, t, rollbar])
 
@@ -124,14 +118,6 @@ function ChatPage() {
 
   if (!channels || channels.length === 0) {
     return <div>No channels</div>
-  }
-
-  console.log('Token in ChatPage after mount:', token)
-  if (token) {
-    console.log('Calling fetchData')
-    fetchData()
-  } else {
-    console.log('No token, skipping fetch')
   }
 
   return (
