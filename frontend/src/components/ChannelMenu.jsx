@@ -75,7 +75,7 @@ function ChannelMenu({ channel, rollbar }) {
     <>
       <div className="channel-menu">
         <button onClick={() => setIsRenameOpen(true)}>
-          ✏️ {t('channels.manage')}
+          {t('channels.manage')}
         </button>
         <button
           onClick={() => setIsDeleteOpen(true)}

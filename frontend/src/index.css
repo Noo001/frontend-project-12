@@ -206,6 +206,8 @@ button:disabled {
   cursor: pointer;
   color: #999;
   transition: color 0.2s;
+  pointer-events: auto;
+  z-index: 10;
 }
 
 .channel-menu button:hover {
