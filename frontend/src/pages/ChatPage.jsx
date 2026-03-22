@@ -102,8 +102,8 @@ function ChatPage() {
     dispatch(setCurrentChannelId(channelId))
   }
 
-  const currentMessages = messages.filter(msg => msg.channelId === currentChannelId)
-  const currentChannel = channels.find(ch => ch.id === currentChannelId)
+  const currentMessages = messages?.filter(msg => msg.channelId === currentChannelId) || []
+  const currentChannel = channels?.find(ch => ch.id === currentChannelId)
 
   if (isLoading) {
     return <div>Loading...</div>
