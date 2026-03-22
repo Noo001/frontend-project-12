@@ -49,7 +49,7 @@ export default {
     manage: 'Управление каналом',
   },
   chat: {
-    messagePlaceholder: 'Введите сообщение...',
+    messagePlaceholder: 'Новое сообщение',
     send: 'Отправить',
     messages: 'Сообщения',
   },

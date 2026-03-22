@@ -168,6 +168,7 @@ function ChatPage() {
             onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
             placeholder={t('chat.messagePlaceholder')}
             disabled={isSending}
+            aria-label={t('chat.messagePlaceholder')}
           />
           <button onClick={handleSendMessage} disabled={isSending}>
             {t('chat.send')}
