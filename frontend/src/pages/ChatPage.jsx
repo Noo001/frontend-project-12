@@ -105,6 +105,9 @@ function ChatPage() {
   const currentMessages = messages?.filter(msg => msg.channelId === currentChannelId) || []
   const currentChannel = channels?.find(ch => ch.id === currentChannelId)
 
+  console.log('Fetched channels:', channels)
+  console.log('Fetched messages:', messages)
+
   if (isLoading) {
     return <div>Loading...</div>
   }
