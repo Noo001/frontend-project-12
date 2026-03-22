@@ -114,7 +114,7 @@ function ChatPage() {
                 onClick={() => handleChannelSwitch(channel.id)}
                 className="channel-button"
               >
-                # {channel.name}
+                {channel.name}
               </button>
               <ChannelMenuWithRollbar channel={channel} />
             </li>
@@ -124,7 +124,7 @@ function ChatPage() {
 
       <div className="chat-area">
         <div className="chat-header">
-          <h2># {currentChannel?.name}</h2>
+          <h2>{currentChannel?.name}</h2>
         </div>
         <div className="messages">
           {currentMessages.map(msg => (
