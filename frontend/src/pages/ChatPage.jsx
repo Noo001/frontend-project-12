@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { useRollbar } from '@rollbar/react'
 import axios from 'axios'
 import socket from '../socket'
 import { setChannels, setCurrentChannelId } from '../store/slices/channelsSlice'
@@ -12,6 +11,7 @@ import { clearToken } from '../store/slices/authSlice'
 import { cleanText } from '../utils/filter'
 import ChannelMenu from '../components/ChannelMenu'
 import AddChannelModal from '../components/AddChannelModal'
+import { useRollbar } from '@rollbar/react'
 
 function ChatPage() {
   const dispatch = useDispatch()
@@ -42,10 +42,10 @@ function ChatPage() {
           navigate('/login')
         } else if (err.code === 'ERR_NETWORK') {
           toast.error(t('errors.network'))
-          rollbar.error('Network error loading data', err)
+          if (rollbar) rollbar.error('Network error loading data', err)
         } else {
           toast.error(t('errors.loadData'))
-          rollbar.error('Failed to load data', err)
+          if (rollbar) rollbar.error('Failed to load data', err)
         }
       }
     }
@@ -82,10 +82,10 @@ function ChatPage() {
     } catch (err) {
       if (err.code === 'ERR_NETWORK') {
         toast.error(t('errors.network'))
-        rollbar.error('Network error sending message', err)
+        if (rollbar) rollbar.error('Network error sending message', err)
       } else {
         toast.error(t('errors.sendMessage'))
-        rollbar.error('Failed to send message', err)
+        if (rollbar) rollbar.error('Failed to send message', err)
       }
     } finally {
       setIsSending(false)

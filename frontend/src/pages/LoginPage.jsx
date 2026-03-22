@@ -1,4 +1,3 @@
-// frontend/src/pages/LoginPage.jsx
 import { Formik, Form, Field } from 'formik'
 import { useNavigate, Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
@@ -6,6 +5,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import axios from 'axios'
 import { setToken } from '../store/slices/authSlice'
+import i18n from "i18next";
 
 function LoginPage() {
   const navigate = useNavigate()

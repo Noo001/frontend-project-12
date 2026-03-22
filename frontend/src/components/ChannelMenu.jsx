@@ -2,17 +2,15 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { useRollbar } from '@rollbar/react'
 import axios from 'axios'
 import { removeChannel, renameChannel } from '../store/slices/channelsSlice'
 import { clearMessagesByChannel } from '../store/slices/messagesSlice'
 import { cleanText } from '../utils/filter'
 import Modal from './Modal'
 
-function ChannelMenu({ channel }) {
+function ChannelMenu({ channel, rollbar }) {
   const dispatch = useDispatch()
   const { t } = useTranslation()
-  const rollbar = useRollbar()
   const token = useSelector((state) => state.auth.token)
   const [isRenameOpen, setIsRenameOpen] = useState(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
@@ -36,10 +34,10 @@ function ChannelMenu({ channel }) {
     } catch (err) {
       if (err.code === 'ERR_NETWORK') {
         toast.error(t('errors.network'))
-        rollbar.error('Network error renaming channel', err)
+        if (rollbar) rollbar.error('Network error renaming channel', err)
       } else {
         toast.error(t('errors.renameChannel'))
-        rollbar.error('Failed to rename channel', err)
+        if (rollbar) rollbar.error('Failed to rename channel', err)
       }
     } finally {
       setIsLoading(false)
@@ -59,10 +57,10 @@ function ChannelMenu({ channel }) {
     } catch (err) {
       if (err.code === 'ERR_NETWORK') {
         toast.error(t('errors.network'))
-        rollbar.error('Network error deleting channel', err)
+        if (rollbar) rollbar.error('Network error deleting channel', err)
       } else {
         toast.error(t('errors.deleteChannel'))
-        rollbar.error('Failed to delete channel', err)
+        if (rollbar) rollbar.error('Failed to delete channel', err)
       }
     } finally {
       setIsLoading(false)

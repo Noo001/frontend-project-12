@@ -3,7 +3,6 @@ import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { useRollbar } from '@rollbar/react'
 import axios from 'axios'
 import { addChannel, setCurrentChannelId } from '../store/slices/channelsSlice'
 import { cleanText } from '../utils/filter'
@@ -12,7 +11,6 @@ import Modal from './Modal'
 function AddChannelModal({ isOpen, onClose }) {
   const dispatch = useDispatch()
   const { t } = useTranslation()
-  const rollbar = useRollbar()
   const token = useSelector((state) => state.auth.token)
   const channels = useSelector((state) => state.channels.items)
 
@@ -54,10 +52,8 @@ function AddChannelModal({ isOpen, onClose }) {
           } catch (err) {
             if (err.code === 'ERR_NETWORK') {
               toast.error(t('errors.network'))
-              rollbar.error('Network error creating channel', err)
             } else {
               toast.error(t('errors.createChannel'))
-              rollbar.error('Failed to create channel', err)
             }
           } finally {
             setSubmitting(false)

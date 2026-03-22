@@ -1,6 +1,6 @@
-import Filter from 'leo-profanity'
+import leoProfanity from 'leo-profanity'
 
-const filter = new Filter()
+const filter = leoProfanity
 
 filter.loadDictionary('ru')
 filter.loadDictionary('en')
