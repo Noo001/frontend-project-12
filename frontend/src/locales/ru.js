@@ -17,7 +17,7 @@ export default {
     noAccount: 'Регистрация',
     haveAccount: 'Войти',
     invalidCredentials: 'Неверные имя пользователя или пароль',
-    userExists: 'Пользователь с таким именем уже существует',
+    userExists: 'Такой пользователь уже существует',
     registrationError: 'Ошибка регистрации',
   },
   validation: {
