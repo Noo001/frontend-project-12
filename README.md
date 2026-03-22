@@ -1,5 +1,4 @@
-Status](https://github.com/Noo001/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Noo001/frontend-project-12/actions)
-
+[![Hexlet Check](https://github.com/Noo001/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Noo001/frontend-project-12/actions/workflows/hexlet-check.yml)
 # @hexlet/code - Slack-like Chat Application
 
 A real-time chat application inspired by Slack, built with React and Vite.
