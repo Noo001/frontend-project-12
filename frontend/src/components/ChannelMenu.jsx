@@ -75,19 +75,12 @@ function ChannelMenu({ channel, rollbar }) {
   return (
     <>
       <div className="channel-menu">
-        <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
-          {t('channels.manage')}
+        <button onClick={() => setIsRenameOpen(true)}>
+          {t('channels.renameChannel')}
         </button>
-        {isMenuOpen && (
-          <div className="dropdown-menu">
-            <button onClick={() => { setIsRenameOpen(true); setIsMenuOpen(false); }}>
-              {t('channels.renameChannel')}
-            </button>
-            <button onClick={() => { setIsDeleteOpen(true); setIsMenuOpen(false); }}>
-              {t('channels.deleteChannel')}
-            </button>
-          </div>
-        )}
+        <button onClick={() => setIsDeleteOpen(true)}>
+          {t('channels.deleteChannel')}
+        </button>
       </div>
 
       <Modal isOpen={isRenameOpen} onClose={() => setIsRenameOpen(false)}>
@@ -110,7 +103,7 @@ function ChannelMenu({ channel, rollbar }) {
 
       <Modal isOpen={isDeleteOpen} onClose={() => setIsDeleteOpen(false)}>
         <h3>{t('channels.deleteChannel')}</h3>
-        <p>{t('channels.deleteConfirmation', { name: channel.name })}</p>
+        <p>{t('channels.deleteConfirmation', {name: channel.name})}</p>
         <button onClick={handleDelete} disabled={isLoading}>
           {t('channels.delete')}
         </button>
