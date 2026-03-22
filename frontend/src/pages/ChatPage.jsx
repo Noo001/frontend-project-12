@@ -25,9 +25,11 @@ function ChatPage() {
   const [newMessage, setNewMessage] = useState('')
   const [isSending, setIsSending] = useState(false)
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true)
       try {
         const response = await axios.get('/api/v1/data', {
           headers: { Authorization: `Bearer ${token}` },
@@ -47,9 +49,13 @@ function ChatPage() {
           toast.error(t('errors.loadData'))
           if (rollbar) rollbar.error('Failed to load data', err)
         }
+      } finally {
+        setIsLoading(false)
       }
     }
-    fetchData()
+    if (token) {
+      fetchData()
+    }
   }, [token, dispatch, navigate, t, rollbar])
 
   useEffect(() => {
@@ -99,6 +105,10 @@ function ChatPage() {
   const currentMessages = messages.filter(msg => msg.channelId === currentChannelId)
   const currentChannel = channels.find(ch => ch.id === currentChannelId)
 
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+
   return (
     <div className="chat-container">
       <div className="sidebar">
@@ -113,6 +123,7 @@ function ChatPage() {
                 type="button"
                 onClick={() => handleChannelSwitch(channel.id)}
                 className="channel-button"
+                data-testid="channel-button"
               >
                 {channel.name}
               </button>
