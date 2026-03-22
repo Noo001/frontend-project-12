@@ -21,7 +21,7 @@
     "node": ">=20.0.0 <23.0.0"
   },
   "dependencies": {
-    "@hexlet/chat-server": "^1.1.6",
+    "@hexlet/chat-server": "^2.0.4",
     "eslint": "^8.57.1",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",

@@ -11,6 +11,12 @@ import rollbar from './rollbar'
 import App from './App'
 import './index.css'
 import 'react-toastify/dist/ReactToastify.css'
+import axios from 'axios'
+
+const isDev = import.meta.env.DEV
+const baseURL = isDev ? 'http://localhost:5001' : ''
+
+axios.defaults.baseURL = baseURL
 
 const appContent = (
   <Provider store={store}>
