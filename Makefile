@@ -4,7 +4,8 @@ install:
 
 build:
 	cd frontend && npm run build
-	cp -r frontend/build ./build
+	mkdir -p build
+	cp -r frontend/dist/* build/
 
 start:
 	npx start-server
