@@ -74,12 +74,8 @@ function ChannelMenu({ channel, rollbar }) {
   return (
     <>
       <div className="channel-menu">
-        <button
-          onClick={() => setIsRenameOpen(true)}
-          aria-label={t('channels.manage')}
-        >
-          ✏️
-          <span className="visually-hidden">{t('channels.manage')}</span>
+        <button onClick={() => setIsRenameOpen(true)}>
+          ✏️ {t('channels.manage')}
         </button>
         <button
           onClick={() => setIsDeleteOpen(true)}
