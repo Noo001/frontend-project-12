@@ -6,6 +6,6 @@ build:
 	cd frontend && npm run build
 
 start:
-	npx start-server -s ./frontend/build
+	npx start-server -s ./frontend/public
 
 .PHONY: install build start
