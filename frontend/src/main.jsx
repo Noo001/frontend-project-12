@@ -31,7 +31,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             {appContent}
           </RollbarProvider>
         )
-        : (
+      : (
           appContent
         )}
   </React.StrictMode>,
