@@ -101,8 +101,10 @@ function ChannelMenu({ channel, rollbar }) {
 
       <Modal isOpen={isRenameOpen} onClose={() => setIsRenameOpen(false)}>
         <h3>{t('channels.renameChannel')}</h3>
+        <label htmlFor="rename-channel-name">{t('channels.channelName')}</label>
         <input
           type="text"
+          id="rename-channel-name"
           value={newName}
           onChange={(e) => setNewName(e.target.value)}
           placeholder={channel.name}
