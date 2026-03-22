@@ -29,7 +29,7 @@ export default {
     passwordMin: 'Не менее 6 символов',
     passwordsMatch: 'Пароли должны совпадать',
     channelNameLength: 'От 3 до 20 символов',
-    channelNamePattern: 'Только латиница, цифры, - и _',
+    channelNamePattern: 'Только латиница, цифры, пробел, - и _',
     channelExists: 'Канал с таким именем уже существует',
   },
   channels: {

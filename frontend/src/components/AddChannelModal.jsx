@@ -18,7 +18,7 @@ function AddChannelModal({ isOpen, onClose }) {
     name: Yup.string()
       .min(3, t('validation.channelNameLength'))
       .max(20, t('validation.channelNameLength'))
-      .matches(/^[a-z0-9_-]+$/, t('validation.channelNamePattern'))
+      .matches(/^[a-z0-9 _-]+$/, t('validation.channelNamePattern'))
       .required(t('validation.required')),
   })
 
