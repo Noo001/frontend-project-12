@@ -19,6 +19,8 @@ export default {
     invalidCredentials: 'Неверные имя пользователя или пароль',
     userExists: 'Такой пользователь уже существует',
     registrationError: 'Ошибка регистрации',
+    usernameLogin: 'Ваш ник',
+    usernameSignup: 'Имя пользователя',
   },
   validation: {
     required: 'Обязательное поле',

@@ -56,12 +56,12 @@ function SignupPage() {
         {({ errors, touched, isSubmitting }) => (
           <Form>
             <div>
-              <label htmlFor="username">{t('auth.username')}</label>
+              <label htmlFor="username">{t('auth.usernameSignup')}</label>
               <Field
                 type="text"
                 id="username"
                 name="username"
-                placeholder={t('auth.usernamePlaceholder')}
+                placeholder={t('auth.usernameSignup')}
               />
               {errors.username && touched.username && (
                 <div className="error">{errors.username}</div>

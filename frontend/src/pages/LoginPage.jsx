@@ -5,7 +5,6 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import axios from 'axios'
 import { setToken } from '../store/slices/authSlice'
-import i18n from "i18next";
 
 function LoginPage() {
   const navigate = useNavigate()
@@ -35,12 +34,12 @@ function LoginPage() {
         {({ isSubmitting }) => (
           <Form>
             <div>
-              <label htmlFor="username">{t('auth.username')}</label>
+              <label htmlFor="username">{t('auth.usernameLogin')}</label>
               <Field
                 type="text"
                 id="username"
                 name="username"
-                placeholder={t('auth.usernamePlaceholder')}
+                placeholder={t('auth.usernameLogin')}
               />
             </div>
             <div>
