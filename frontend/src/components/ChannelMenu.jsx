@@ -122,7 +122,7 @@ function ChannelMenu({ channel, rollbar }) {
       <Modal isOpen={isDeleteOpen} onClose={() => setIsDeleteOpen(false)}>
         <h3>{t('channels.deleteChannel')}</h3>
         <p>{t('channels.deleteConfirmation', {name: channel.name})}</p>
-        <button onClick={handleDelete} disabled={isLoading}>
+        <button onClick={handleDelete} disabled={isLoading} className="btn-danger">
           {t('channels.delete')}
         </button>
         <button onClick={() => setIsDeleteOpen(false)}>
