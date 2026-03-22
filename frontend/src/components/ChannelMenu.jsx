@@ -11,7 +11,7 @@ import Modal from './Modal'
 function ChannelMenu({ channel, rollbar }) {
   const dispatch = useDispatch()
   const { t } = useTranslation()
-  const token = useSelector((state) => state.auth.token)
+  const token = useSelector(state => state.auth.token)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isRenameOpen, setIsRenameOpen] = useState(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
@@ -26,21 +26,24 @@ function ChannelMenu({ channel, rollbar }) {
       await axios.patch(
         `/api/v1/channels/${channel.id}`,
         { name: cleanName },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` } },
       )
       dispatch(renameChannel({ id: channel.id, name: cleanName }))
       toast.success(t('channels.renamed', { name: cleanName }))
       setIsRenameOpen(false)
       setNewName('')
-    } catch (err) {
+    }
+    catch (err) {
       if (err.code === 'ERR_NETWORK') {
         toast.error(t('errors.network'))
         if (rollbar) rollbar.error('Network error renaming channel', err)
-      } else {
+      }
+      else {
         toast.error(t('errors.renameChannel'))
         if (rollbar) rollbar.error('Failed to rename channel', err)
       }
-    } finally {
+    }
+    finally {
       setIsLoading(false)
     }
   }
@@ -48,22 +51,26 @@ function ChannelMenu({ channel, rollbar }) {
   const handleDelete = async () => {
     setIsLoading(true)
     try {
-      await axios.delete(`/api/v1/channels/${channel.id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      await axios.delete(
+        `/api/v1/channels/${channel.id}`,
+        { headers: { Authorization: `Bearer ${token}` } },
+      )
       dispatch(removeChannel(channel.id))
       dispatch(clearMessagesByChannel(channel.id))
       toast.success(t('channels.deleted', { name: channel.name }))
       setIsDeleteOpen(false)
-    } catch (err) {
+    }
+    catch (err) {
       if (err.code === 'ERR_NETWORK') {
         toast.error(t('errors.network'))
         if (rollbar) rollbar.error('Network error deleting channel', err)
-      } else {
+      }
+      else {
         toast.error(t('errors.deleteChannel'))
         if (rollbar) rollbar.error('Failed to delete channel', err)
       }
-    } finally {
+    }
+    finally {
       setIsLoading(false)
     }
   }
@@ -75,24 +82,25 @@ function ChannelMenu({ channel, rollbar }) {
   return (
     <>
       <div className="channel-menu">
-        <button onClick={() => {
-          console.log('clicked');
-          setIsMenuOpen(true);
-        }}>
+        <button onClick={() => setIsMenuOpen(true)}>
           {t('channels.manage')}
         </button>
         {isMenuOpen && (
           <div className="dropdown-menu">
-            <button onClick={() => {
-              setIsRenameOpen(true);
-              setIsMenuOpen(false);
-            }}>
+            <button
+              onClick={() => {
+                setIsRenameOpen(true)
+                setIsMenuOpen(false)
+              }}
+            >
               {t('channels.renameChannel')}
             </button>
-            <button onClick={() => {
-              setIsDeleteOpen(true);
-              setIsMenuOpen(false);
-            }}>
+            <button
+              onClick={() => {
+                setIsDeleteOpen(true)
+                setIsMenuOpen(false)
+              }}
+            >
               {t('channels.deleteChannel')}
             </button>
           </div>
@@ -106,10 +114,10 @@ function ChannelMenu({ channel, rollbar }) {
           type="text"
           id="rename-channel-name"
           value={newName}
-          onChange={(e) => setNewName(e.target.value)}
+          onChange={e => setNewName(e.target.value)}
           placeholder={channel.name}
           autoFocus
-          onKeyDown={(e) => e.key === 'Enter' && handleRename()}
+          onKeyDown={e => e.key === 'Enter' && handleRename()}
         />
         <button onClick={handleRename} disabled={isLoading}>
           {t('channels.rename')}
@@ -121,7 +129,7 @@ function ChannelMenu({ channel, rollbar }) {
 
       <Modal isOpen={isDeleteOpen} onClose={() => setIsDeleteOpen(false)}>
         <h3>{t('channels.deleteChannel')}</h3>
-        <p>{t('channels.deleteConfirmation', {name: channel.name})}</p>
+        <p>{t('channels.deleteConfirmation', { name: channel.name })}</p>
         <button onClick={handleDelete} disabled={isLoading} className="btn-danger">
           {t('channels.delete')}
         </button>

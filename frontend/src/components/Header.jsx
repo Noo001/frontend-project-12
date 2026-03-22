@@ -5,7 +5,9 @@ import { clearToken } from '../store/slices/authSlice'
 
 function Header() {
   const dispatch = useDispatch()
-  const token = useSelector((state) => state.auth.token)
+  const token = useSelector((state) => {
+    return state.auth.token
+  })
   const { t } = useTranslation()
 
   const handleLogout = () => {

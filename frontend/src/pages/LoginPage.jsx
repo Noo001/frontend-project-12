@@ -24,9 +24,11 @@ function LoginPage() {
             const { token, username } = response.data
             dispatch(setToken({ token, username }))
             navigate('/')
-          } catch {
+          }
+          catch (err) {
             setError(t('auth.invalidCredentials'))
-          } finally {
+          }
+          finally {
             setSubmitting(false)
           }
         }}

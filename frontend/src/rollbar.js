@@ -11,7 +11,8 @@ if (token) {
     captureUnhandledRejections: true,
     enabled: true,
   })
-} else {
+}
+else {
   console.warn('Rollbar token not found')
 }
 

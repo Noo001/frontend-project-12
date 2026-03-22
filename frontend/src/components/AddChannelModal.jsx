@@ -11,8 +11,8 @@ import Modal from './Modal'
 function AddChannelModal({ isOpen, onClose }) {
   const dispatch = useDispatch()
   const { t } = useTranslation()
-  const token = useSelector((state) => state.auth.token)
-  const channels = useSelector((state) => state.channels.items)
+  const token = useSelector(state => state.auth.token)
+  const channels = useSelector(state => state.channels.items)
 
   const validationSchema = Yup.object({
     name: Yup.string()
@@ -41,7 +41,7 @@ function AddChannelModal({ isOpen, onClose }) {
             const response = await axios.post(
               '/api/v1/channels',
               { name: cleanName },
-              { headers: { Authorization: `Bearer ${token}` } }
+              { headers: { Authorization: `Bearer ${token}` } },
             )
             const newChannel = response.data
             dispatch(addChannel(newChannel))
@@ -49,13 +49,16 @@ function AddChannelModal({ isOpen, onClose }) {
             toast.success(t('channels.created', { name: cleanName }))
             resetForm()
             onClose()
-          } catch (err) {
+          }
+          catch (err) {
             if (err.code === 'ERR_NETWORK') {
               toast.error(t('errors.network'))
-            } else {
+            }
+            else {
               toast.error(t('errors.createChannel'))
             }
-          } finally {
+          }
+          finally {
             setSubmitting(false)
           }
         }}

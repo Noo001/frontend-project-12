@@ -8,7 +8,9 @@ import NotFoundPage from './pages/NotFoundPage'
 import Header from './components/Header'
 
 function PrivateRoute({ children }) {
-  const token = useSelector((state) => state.auth.token)
+  const token = useSelector((state) => {
+    return state.auth.token
+  })
   return token ? children : <Navigate to="/login" replace />
 }
 
@@ -21,11 +23,11 @@ function App() {
         <Route path="/signup" element={<SignupPage />} />
         <Route
           path="/"
-          element={
+          element={(
             <PrivateRoute>
               <ChatPage />
             </PrivateRoute>
-          }
+          )}
         />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

@@ -5,5 +5,9 @@ const filter = leoProfanity
 filter.loadDictionary('ru')
 filter.loadDictionary('en')
 
-export const cleanText = (text) => filter.clean(text)
-export const isProfane = (text) => filter.check(text)
+export const cleanText = (text) => {
+  return filter.clean(text)
+}
+export const isProfane = (text) => {
+  return filter.check(text)
+}

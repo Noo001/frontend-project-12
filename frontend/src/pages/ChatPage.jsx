@@ -18,11 +18,11 @@ function ChatPage() {
   const navigate = useNavigate()
   const { t } = useTranslation()
   const rollbar = useRollbar()
-  const token = useSelector((state) => state.auth.token)
-  const username = useSelector((state) => state.auth.username)
-  const channels = useSelector((state) => state.channels.items)
-  const currentChannelId = useSelector((state) => state.channels.currentChannelId)
-  const messages = useSelector((state) => state.messages.items)
+  const token = useSelector(state => state.auth.token)
+  const username = useSelector(state => state.auth.username)
+  const channels = useSelector(state => state.channels.items)
+  const currentChannelId = useSelector(state => state.channels.currentChannelId)
+  const messages = useSelector(state => state.messages.items)
   const [newMessage, setNewMessage] = useState('')
   const [isSending, setIsSending] = useState(false)
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
@@ -46,18 +46,22 @@ function ChatPage() {
         dispatch(setChannels(channels))
         dispatch(setMessages(messages))
         dispatch(setCurrentChannelId(currentChannelId))
-      } catch (err) {
+      }
+      catch (err) {
         if (err.response?.status === 401) {
           dispatch(clearToken())
           navigate('/login')
-        } else if (err.code === 'ERR_NETWORK') {
+        }
+        else if (err.code === 'ERR_NETWORK') {
           toast.error(t('errors.network'))
           if (rollbar) rollbar.error('Network error loading data', err)
-        } else {
+        }
+        else {
           toast.error(t('errors.loadData'))
           if (rollbar) rollbar.error('Failed to load data', err)
         }
-      } finally {
+      }
+      finally {
         setIsLoading(false)
       }
     }
@@ -68,8 +72,6 @@ function ChatPage() {
 
   useEffect(() => {
     socket.on('newMessage', (message) => {
-      console.log('New message received:', message)
-      console.log('Username:', message.username)
       dispatch(addMessage(message))
     })
 
@@ -93,18 +95,21 @@ function ChatPage() {
         },
         {
           headers: { Authorization: `Bearer ${token}` },
-        }
+        },
       )
       setNewMessage('')
-    } catch (err) {
+    }
+    catch (err) {
       if (err.code === 'ERR_NETWORK') {
         toast.error(t('errors.network'))
         if (rollbar) rollbar.error('Network error sending message', err)
-      } else {
+      }
+      else {
         toast.error(t('errors.sendMessage'))
         if (rollbar) rollbar.error('Failed to send message', err)
       }
-    } finally {
+    }
+    finally {
       setIsSending(false)
     }
   }
@@ -154,7 +159,9 @@ function ChatPage() {
         <div className="messages">
           {currentMessages.map(msg => (
             <div key={msg.id} className="message">
-              <strong>{msg.username}</strong>: {msg.body}
+              <strong>{msg.username}</strong>
+              {': '}
+              {msg.body}
             </div>
           ))}
         </div>
@@ -162,8 +169,8 @@ function ChatPage() {
           <input
             type="text"
             value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
+            onChange={e => setNewMessage(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && handleSendMessage()}
             placeholder={t('chat.messagePlaceholder')}
             aria-label={t('chat.messagePlaceholder')}
             disabled={isSending}

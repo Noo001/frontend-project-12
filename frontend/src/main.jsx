@@ -14,23 +14,25 @@ import 'react-toastify/dist/ReactToastify.css'
 
 const appContent = (
   <Provider store={store}>
-    <BrowserRouter>
-      <App />
-      <ToastContainer position="bottom-right" autoClose={5000} />
-    </BrowserRouter>
+    <I18nextProvider i18n={i18n}>
+      <BrowserRouter>
+        <App />
+        <ToastContainer position="bottom-right" autoClose={5000} />
+      </BrowserRouter>
+    </I18nextProvider>
   </Provider>
 )
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <I18nextProvider i18n={i18n}>
-      {rollbar ? (
+    {rollbar
+      ? (
         <RollbarProvider instance={rollbar}>
           {appContent}
         </RollbarProvider>
-      ) : (
+      )
+      : (
         appContent
       )}
-    </I18nextProvider>
   </React.StrictMode>,
 )

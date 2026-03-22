@@ -38,18 +38,18 @@ function SignupPage() {
           try {
             const response = await axios.post('/api/v1/signup', values)
             const { token, username } = response.data
-            console.error('Registration token:', token)
-            console.error('Registration username:', username)
             dispatch(setToken({ token, username }))
             navigate('/')
-          } catch (err) {
-            console.error('Registration error:', err)
+          }
+          catch (err) {
             if (err.response?.status === 409) {
               setError(t('auth.userExists'))
-            } else {
+            }
+            else {
               setError(t('auth.registrationError'))
             }
-          } finally {
+          }
+          finally {
             setSubmitting(false)
           }
         }}
