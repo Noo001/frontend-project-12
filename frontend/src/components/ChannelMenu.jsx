@@ -75,7 +75,10 @@ function ChannelMenu({ channel, rollbar }) {
   return (
     <>
       <div className="channel-menu">
-        <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
+        <button onClick={() => {
+          console.log('clicked');
+          setIsMenuOpen(true);
+        }}>
           {t('channels.manage')}
         </button>
         {isMenuOpen && (
