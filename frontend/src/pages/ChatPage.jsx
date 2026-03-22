@@ -126,6 +126,14 @@ function ChatPage() {
     return <div>No channels</div>
   }
 
+  console.log('Token in ChatPage after mount:', token)
+  if (token) {
+    console.log('Calling fetchData')
+    fetchData()
+  } else {
+    console.log('No token, skipping fetch')
+  }
+
   return (
     <div className="chat-container">
       <div className="sidebar">
