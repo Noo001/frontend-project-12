@@ -3,6 +3,7 @@ import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import { useRollbar } from '@rollbar/react'
 import axios from 'axios'
 import { addChannel, setCurrentChannelId } from '../store/slices/channelsSlice'
 import { cleanText } from '../utils/filter'
@@ -11,6 +12,7 @@ import Modal from './Modal'
 function AddChannelModal({ isOpen, onClose }) {
   const dispatch = useDispatch()
   const { t } = useTranslation()
+  const rollbar = useRollbar()
   const token = useSelector((state) => state.auth.token)
   const channels = useSelector((state) => state.channels.items)
 
@@ -36,24 +38,31 @@ function AddChannelModal({ isOpen, onClose }) {
           return {}
         }}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
+          console.log('Submitting channel creation for:', values.name)
           try {
             const cleanName = cleanText(values.name)
+            console.log('Clean name:', cleanName)
             const response = await axios.post(
               '/api/v1/channels',
               { name: cleanName },
               { headers: { Authorization: `Bearer ${token}` } }
             )
+            console.log('Channel created, response:', response.data)
             const newChannel = response.data
             dispatch(addChannel(newChannel))
             dispatch(setCurrentChannelId(newChannel.id))
             toast.success(t('channels.created', { name: cleanName }))
+            console.log('Toast shown, resetting form and closing modal')
             resetForm()
             onClose()
           } catch (err) {
+            console.error('Error creating channel:', err)
             if (err.code === 'ERR_NETWORK') {
               toast.error(t('errors.network'))
+              if (rollbar) rollbar.error('Network error creating channel', err)
             } else {
               toast.error(t('errors.createChannel'))
+              if (rollbar) rollbar.error('Failed to create channel', err)
             }
           } finally {
             setSubmitting(false)
