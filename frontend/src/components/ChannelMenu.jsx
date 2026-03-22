@@ -12,6 +12,7 @@ function ChannelMenu({ channel, rollbar }) {
   const dispatch = useDispatch()
   const { t } = useTranslation()
   const token = useSelector((state) => state.auth.token)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isRenameOpen, setIsRenameOpen] = useState(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
   const [newName, setNewName] = useState('')
@@ -74,16 +75,19 @@ function ChannelMenu({ channel, rollbar }) {
   return (
     <>
       <div className="channel-menu">
-        <button onClick={() => setIsRenameOpen(true)}>
+        <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
           {t('channels.manage')}
         </button>
-        <button
-          onClick={() => setIsDeleteOpen(true)}
-          aria-label={t('channels.delete')}
-        >
-          🗑️
-          <span className="visually-hidden">{t('channels.delete')}</span>
-        </button>
+        {isMenuOpen && (
+          <div className="dropdown-menu">
+            <button onClick={() => { setIsRenameOpen(true); setIsMenuOpen(false); }}>
+              {t('channels.renameChannel')}
+            </button>
+            <button onClick={() => { setIsDeleteOpen(true); setIsMenuOpen(false); }}>
+              {t('channels.deleteChannel')}
+            </button>
+          </div>
+        )}
       </div>
 
       <Modal isOpen={isRenameOpen} onClose={() => setIsRenameOpen(false)}>
